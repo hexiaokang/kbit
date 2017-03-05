@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>千位符插件</title>
+    <script src="js/kbit.js"></script>
+    <style>
+        body{text-align: center}
+        input{width: 50%;margin-top: 30px}
+    </style>
+</head>
+<body>
+<div>
+    <!--<p>这是一个千位符插件项目，输入框中输入数字后随着值变大，会自动添加千位符，提升用户体验。</p>-->
+    <input type="text" onkeyup="up(this)"/>
+</div>
+
+<script>
+    function up(_this){
+        var keyValue=event.keyCode;
+        if((keyValue>=48&&keyValue<=57)||keyValue==8){
+            var currentValue=_this.value.toString().replace(/,/g,'');
+            currentValue=currentValue.split('').reverse();
+            for(var i=0;i<currentValue.length;i++){
+                if(i%3==0&&i!=0){
+                    currentValue[i]+=',';
+                }
+            }
+            currentValue=currentValue.reverse().join("");
+            _this.value=currentValue;
+        }else{
+            event.returnValue=false;
+        }
+        function getCursortPosition (ctrl) {
+            var CaretPos = 0;   // IE Support
+            if (document.selection) {
+                ctrl.focus ();
+                var Sel = document.selection.createRange ();
+                Sel.moveStart ('character', -ctrl.value.length);
+                CaretPos = Sel.text.length;
+            }
+            // Firefox support
+            else if (ctrl.selectionStart || ctrl.selectionStart == '0')
+                CaretPos = ctrl.selectionStart;
+            return (CaretPos);
+        }
+        var index=getCursortPosition(this);
+        console.info(index)
+    }
+
+</script>
+</body>
+</html>
